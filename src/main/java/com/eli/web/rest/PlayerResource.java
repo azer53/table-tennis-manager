@@ -98,7 +98,7 @@ public class PlayerResource {
         log.debug("REST request to get a page of FrenoyPlayers");
 
         Page<Player> page = playerService.findAll(pageable);
-        if (page.getSize() < 5) {
+        if (page.getNumberOfElements() < 5) {
             syncPlayers();
         }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/players");

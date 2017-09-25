@@ -28,6 +28,7 @@ public class FrenoyService {
             player.setFirstName(member.getFirstName());
             player.setLastName(member.getLastName());
             player.setRanking(member.getRanking());
+            player.setFrenoyId(String.valueOf(member.getUniqueIndex()));
 
             parsedPlayers.add(player);
         }
