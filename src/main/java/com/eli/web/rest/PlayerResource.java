@@ -2,6 +2,7 @@ package com.eli.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.eli.domain.Player;
+import com.eli.service.FrenoyService;
 import com.eli.service.PlayerService;
 import com.eli.web.rest.util.HeaderUtil;
 import com.eli.web.rest.util.PaginationUtil;
@@ -35,8 +36,11 @@ public class PlayerResource {
 
     private final PlayerService playerService;
 
-    public PlayerResource(PlayerService playerService) {
+    private final FrenoyService frenoyService;
+
+    public PlayerResource(PlayerService playerService, FrenoyService frenoyService) {
         this.playerService = playerService;
+        this.frenoyService = frenoyService;
     }
 
     /**
@@ -58,6 +62,7 @@ public class PlayerResource {
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
+
 
     /**
      * PUT  /players : Updates an existing player.
@@ -90,10 +95,22 @@ public class PlayerResource {
     @GetMapping("/players")
     @Timed
     public ResponseEntity<List<Player>> getAllPlayers(@ApiParam Pageable pageable) {
-        log.debug("REST request to get a page of Players");
+        log.debug("REST request to get a page of FrenoyPlayers");
+
         Page<Player> page = playerService.findAll(pageable);
+        if (page.getSize() < 5) {
+            syncPlayers();
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/players");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    private void syncPlayers() {
+        log.debug("REST request to sync and save frenoy players");
+        List<Player> sintNiklaasPlayers = frenoyService.getSintNiklaasPlayers();
+        for (Player player : sintNiklaasPlayers) {
+            playerService.save(player);
+        }
     }
 
     /**

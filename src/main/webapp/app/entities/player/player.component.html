@@ -1,12 +1,14 @@
 <div>
     <h2>
         <span jhiTranslate="tableTennisManagerApp.player.home.title">Players</span>
-        <button class="btn btn-primary float-right jh-create-entity create-player" [routerLink]="['/', { outlets: { popup: ['player-new'] } }]">
+        <button class="btn btn-primary float-right jh-create-entity create-player"
+                [routerLink]="['/', { outlets: { popup: ['player-new'] } }]">
             <span class="fa fa-plus"></span>
-            <span  jhiTranslate="tableTennisManagerApp.player.home.createLabel">
+            <span jhiTranslate="tableTennisManagerApp.player.home.createLabel">
             Create new Player
             </span>
         </button>
+
     </h2>
     <jhi-alert></jhi-alert>
     <div class="row">
@@ -16,12 +18,16 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="firstName"><span jhiTranslate="tableTennisManagerApp.player.firstName">First Name</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="lastName"><span jhiTranslate="tableTennisManagerApp.player.lastName">Last Name</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="frenoyId"><span jhiTranslate="tableTennisManagerApp.player.frenoyId">Frenoy Id</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="ranking"><span jhiTranslate="tableTennisManagerApp.player.ranking">Ranking</span> <span class="fa fa-sort"></span></th>
-            <th></th>
+                <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="firstName"><span jhiTranslate="tableTennisManagerApp.player.firstName">First Name</span>
+                    <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="lastName"><span jhiTranslate="tableTennisManagerApp.player.lastName">Last Name</span>
+                    <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="frenoyId"><span jhiTranslate="tableTennisManagerApp.player.frenoyId">Frenoy Id</span>
+                    <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="ranking"><span jhiTranslate="tableTennisManagerApp.player.ranking">Ranking</span> <span
+                    class="fa fa-sort"></span></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -59,12 +65,13 @@
             </tbody>
         </table>
     </div>
-        <div *ngIf="players && players.length">
-            <div class="row justify-content-center">
-                <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-            </div>
-            <div class="row justify-content-center">
-                <ngb-pagination [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
-            </div>
+    <div *ngIf="players && players.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
         </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page"
+                            (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
 </div>
