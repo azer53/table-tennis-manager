@@ -1,0 +1,36 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "team",
+            "otherEntityName": "team",
+            "relationshipType": "many-to-many",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "player"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "firstName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "lastName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "frenoyId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ranking",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170925074754",
+    "dto": "no",
+    "service": "serviceClass",
+    "entityTableName": "player",
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination"
+}

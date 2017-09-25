@@ -1,0 +1,31 @@
+
+<div *ngIf="team">
+    <h2><span jhiTranslate="tableTennisManagerApp.team.detail.title">Team</span> {{team.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="tableTennisManagerApp.team.name">Name</span></dt>
+        <dd>
+            <span>{{team.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="tableTennisManagerApp.team.player">Player</span></dt>
+        <dd>
+            <span *ngFor="let player of team.players; let last = last">
+                <a [routerLink]="['/player', player?.id ]">{{player.lastName}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'team/'+ team.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

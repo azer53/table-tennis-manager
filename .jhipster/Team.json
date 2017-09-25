@@ -1,0 +1,28 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "player",
+            "otherEntityName": "player",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "lastName",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "team"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20170925073955",
+    "dto": "no",
+    "service": "serviceClass",
+    "entityTableName": "team",
+    "jpaMetamodelFiltering": false,
+    "pagination": "no"
+}
