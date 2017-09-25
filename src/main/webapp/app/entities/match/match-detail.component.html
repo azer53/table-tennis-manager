@@ -1,0 +1,41 @@
+
+<div *ngIf="match">
+    <h2><span jhiTranslate="tableTennisManagerApp.match.detail.title">Match</span> {{match.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="tableTennisManagerApp.match.homePlayerSets">Home Player Sets</span></dt>
+        <dd>
+            <span>{{match.homePlayerSets}}</span>
+        </dd>
+        <dt><span jhiTranslate="tableTennisManagerApp.match.awayPlayerSets">Away Player Sets</span></dt>
+        <dd>
+            <span>{{match.awayPlayerSets}}</span>
+        </dd>
+        <dt><span jhiTranslate="tableTennisManagerApp.match.homePlayer">Home Player</span></dt>
+        <dd>
+            <div *ngIf="match.homePlayer">
+                <a [routerLink]="['/player', match.homePlayer?.id]">{{match.homePlayer?.lastName}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="tableTennisManagerApp.match.awayPlayer">Away Player</span></dt>
+        <dd>
+            <div *ngIf="match.awayPlayer">
+                <a [routerLink]="['/player', match.awayPlayer?.id]">{{match.awayPlayer?.lastName}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'match/'+ match.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -7,6 +7,18 @@
             "relationshipType": "many-to-many",
             "ownerSide": false,
             "otherEntityRelationshipName": "player"
+        },
+        {
+            "relationshipName": "homeMatch",
+            "otherEntityName": "match",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "homePlayer"
+        },
+        {
+            "relationshipName": "awayMatch",
+            "otherEntityName": "match",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "awayPlayer"
         }
     ],
     "fields": [

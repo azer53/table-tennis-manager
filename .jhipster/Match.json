@@ -1,0 +1,33 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "homePlayer",
+            "otherEntityName": "player",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "lastName"
+        },
+        {
+            "relationshipName": "awayPlayer",
+            "otherEntityName": "player",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "lastName"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "homePlayerSets",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "awayPlayerSets",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20170925134520",
+    "dto": "no",
+    "service": "serviceClass",
+    "entityTableName": "jhi_match",
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination"
+}

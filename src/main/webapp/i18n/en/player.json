@@ -19,7 +19,9 @@
             "lastName": "Last Name",
             "frenoyId": "Frenoy Id",
             "ranking": "Ranking",
-            "team": "Team"
+            "team": "Team",
+            "homeMatch": "Home Match",
+            "awayMatch": "Away Match"
         }
     }
 }

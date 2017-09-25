@@ -44,7 +44,7 @@ public class PlayerService {
      */
     @Transactional(readOnly = true)
     public Page<Player> findAll(Pageable pageable) {
-        log.debug("Request to get all FrenoyPlayers");
+        log.debug("Request to get all Players");
         return playerRepository.findAll(pageable);
     }
 

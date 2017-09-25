@@ -41,6 +41,16 @@ public class Player implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Team> teams = new HashSet<>();
 
+    @OneToMany(mappedBy = "homePlayer")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Match> homeMatches = new HashSet<>();
+
+    @OneToMany(mappedBy = "awayPlayer")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Match> awayMatches = new HashSet<>();
+
     // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -125,6 +135,56 @@ public class Player implements Serializable {
 
     public void setTeams(Set<Team> teams) {
         this.teams = teams;
+    }
+
+    public Set<Match> getHomeMatches() {
+        return homeMatches;
+    }
+
+    public Player homeMatches(Set<Match> matches) {
+        this.homeMatches = matches;
+        return this;
+    }
+
+    public Player addHomeMatch(Match match) {
+        this.homeMatches.add(match);
+        match.setHomePlayer(this);
+        return this;
+    }
+
+    public Player removeHomeMatch(Match match) {
+        this.homeMatches.remove(match);
+        match.setHomePlayer(null);
+        return this;
+    }
+
+    public void setHomeMatches(Set<Match> matches) {
+        this.homeMatches = matches;
+    }
+
+    public Set<Match> getAwayMatches() {
+        return awayMatches;
+    }
+
+    public Player awayMatches(Set<Match> matches) {
+        this.awayMatches = matches;
+        return this;
+    }
+
+    public Player addAwayMatch(Match match) {
+        this.awayMatches.add(match);
+        match.setAwayPlayer(this);
+        return this;
+    }
+
+    public Player removeAwayMatch(Match match) {
+        this.awayMatches.remove(match);
+        match.setAwayPlayer(null);
+        return this;
+    }
+
+    public void setAwayMatches(Set<Match> matches) {
+        this.awayMatches = matches;
     }
     // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
 

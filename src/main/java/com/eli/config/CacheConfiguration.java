@@ -45,6 +45,9 @@ public class CacheConfiguration {
             cm.createCache(com.eli.domain.Player.class.getName(), jcacheConfiguration);
             cm.createCache(com.eli.domain.Player.class.getName() + ".teams", jcacheConfiguration);
             cm.createCache(com.eli.domain.Team.class.getName() + ".players", jcacheConfiguration);
+            cm.createCache(com.eli.domain.Match.class.getName(), jcacheConfiguration);
+            cm.createCache(com.eli.domain.Player.class.getName() + ".homeMatches", jcacheConfiguration);
+            cm.createCache(com.eli.domain.Player.class.getName() + ".awayMatches", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

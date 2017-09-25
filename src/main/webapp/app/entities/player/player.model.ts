@@ -8,6 +8,8 @@ export class Player implements BaseEntity {
         public frenoyId?: string,
         public ranking?: string,
         public teams?: BaseEntity[],
+        public homeMatches?: BaseEntity[],
+        public awayMatches?: BaseEntity[],
     ) {
     }
 }

@@ -1,10 +1,10 @@
 <div>
     <h2>
-        <span jhiTranslate="tableTennisManagerApp.player.home.title">Players</span>
-        <button class="btn btn-primary float-right jh-create-entity create-player" [routerLink]="['/', { outlets: { popup: ['player-new'] } }]">
+        <span jhiTranslate="tableTennisManagerApp.match.home.title">Matches</span>
+        <button class="btn btn-primary float-right jh-create-entity create-match" [routerLink]="['/', { outlets: { popup: ['match-new'] } }]">
             <span class="fa fa-plus"></span>
-            <span  jhiTranslate="tableTennisManagerApp.player.home.createLabel">
-            Create new Player
+            <span  jhiTranslate="tableTennisManagerApp.match.home.createLabel">
+            Create new Match
             </span>
         </button>
     </h2>
@@ -12,42 +12,50 @@
     <div class="row">
     </div>
     <br/>
-    <div class="table-responsive" *ngIf="players">
+    <div class="table-responsive" *ngIf="matches">
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="firstName"><span jhiTranslate="tableTennisManagerApp.player.firstName">First Name</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="lastName"><span jhiTranslate="tableTennisManagerApp.player.lastName">Last Name</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="frenoyId"><span jhiTranslate="tableTennisManagerApp.player.frenoyId">Frenoy Id</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="ranking"><span jhiTranslate="tableTennisManagerApp.player.ranking">Ranking</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="homePlayerSets"><span jhiTranslate="tableTennisManagerApp.match.homePlayerSets">Home Player Sets</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="awayPlayerSets"><span jhiTranslate="tableTennisManagerApp.match.awayPlayerSets">Away Player Sets</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="homePlayer.lastName"><span jhiTranslate="tableTennisManagerApp.match.homePlayer">Home Player</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="awayPlayer.lastName"><span jhiTranslate="tableTennisManagerApp.match.awayPlayer">Away Player</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let player of players ;trackBy: trackId">
-                <td><a [routerLink]="['../player', player.id ]">{{player.id}}</a></td>
-                <td>{{player.firstName}}</td>
-                <td>{{player.lastName}}</td>
-                <td>{{player.frenoyId}}</td>
-                <td>{{player.ranking}}</td>
+            <tr *ngFor="let match of matches ;trackBy: trackId">
+                <td><a [routerLink]="['../match', match.id ]">{{match.id}}</a></td>
+                <td>{{match.homePlayerSets}}</td>
+                <td>{{match.awayPlayerSets}}</td>
+                <td>
+                    <div *ngIf="match.homePlayer">
+                        <a [routerLink]="['../player', match.homePlayer?.id ]" >{{match.homePlayer?.lastName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="match.awayPlayer">
+                        <a [routerLink]="['../player', match.awayPlayer?.id ]" >{{match.awayPlayer?.lastName}}</a>
+                    </div>
+                </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
-                                [routerLink]="['../player', player.id ]"
+                                [routerLink]="['../match', match.id ]"
                                 class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'player/'+ player.id + '/edit'} }]"
+                                [routerLink]="['/', { outlets: { popup: 'match/'+ match.id + '/edit'} }]"
                                 replaceUrl="true"
                                 class="btn btn-primary btn-sm">
                             <span class="fa fa-pencil"></span>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'player/'+ player.id + '/delete'} }]"
+                                [routerLink]="['/', { outlets: { popup: 'match/'+ match.id + '/delete'} }]"
                                 replaceUrl="true"
                                 class="btn btn-danger btn-sm">
                             <span class="fa fa-remove"></span>
@@ -59,7 +67,7 @@
             </tbody>
         </table>
     </div>
-        <div *ngIf="players && players.length">
+        <div *ngIf="matches && matches.length">
             <div class="row justify-content-center">
                 <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
             </div>
