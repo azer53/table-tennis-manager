@@ -43,7 +43,7 @@ public class TeamService {
     @Transactional(readOnly = true)
     public List<Team> findAll() {
         log.debug("Request to get all Teams");
-        return teamRepository.findAllWithEagerRelationships();
+        return teamRepository.findTeamFromCurrentUser();
     }
 
     /**
