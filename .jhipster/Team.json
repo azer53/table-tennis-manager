@@ -8,6 +8,14 @@
             "otherEntityField": "lastName",
             "ownerSide": true,
             "otherEntityRelationshipName": "team"
+        },
+        {
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "one-to-one",
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "team"
         }
     ],
     "fields": [

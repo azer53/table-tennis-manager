@@ -16,7 +16,8 @@
                 "title": "Team"
             },
             "name": "Name",
-            "player": "Player"
+            "player": "Player",
+            "user": "User"
         }
     }
 }

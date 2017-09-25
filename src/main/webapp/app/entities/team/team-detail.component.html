@@ -14,6 +14,10 @@
                 <a [routerLink]="['/player', player?.id ]">{{player.lastName}}</a>{{last ? '' : ', '}}
             </span>
         </dd>
+        <dt><span jhiTranslate="tableTennisManagerApp.team.user">User</span></dt>
+        <dd>
+            {{team.user?.login}}
+        </dd>
     </dl>
 
     <button type="submit"

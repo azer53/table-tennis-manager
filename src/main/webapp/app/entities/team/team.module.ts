@@ -2,6 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { TableTennisManagerSharedModule } from '../../shared';
+import { TableTennisManagerAdminModule } from '../../admin/admin.module';
 import {
     TeamService,
     TeamPopupService,
@@ -23,6 +24,7 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         TableTennisManagerSharedModule,
+        TableTennisManagerAdminModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [

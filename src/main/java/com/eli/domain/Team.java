@@ -35,6 +35,10 @@ public class Team implements Serializable {
                inverseJoinColumns = @JoinColumn(name="players_id", referencedColumnName="id"))
     private Set<Player> players = new HashSet<>();
 
+    @OneToOne
+    @JoinColumn(unique = true)
+    private User user;
+
     // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -80,6 +84,19 @@ public class Team implements Serializable {
 
     public void setPlayers(Set<Player> players) {
         this.players = players;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Team user(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
     // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
 
