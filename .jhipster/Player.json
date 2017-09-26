@@ -40,7 +40,7 @@
         }
     ],
     "changelogDate": "20170925074754",
-    "dto": "no",
+    "dto": "mapstruct",
     "service": "serviceClass",
     "entityTableName": "player",
     "jpaMetamodelFiltering": false,

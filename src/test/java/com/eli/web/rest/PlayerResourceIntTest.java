@@ -5,6 +5,8 @@ import com.eli.TableTennisManagerApp;
 import com.eli.domain.Player;
 import com.eli.repository.PlayerRepository;
 import com.eli.service.PlayerService;
+import com.eli.service.dto.PlayerDTO;
+import com.eli.service.mapper.PlayerMapper;
 import com.eli.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -54,8 +56,10 @@ public class PlayerResourceIntTest {
     private PlayerRepository playerRepository;
 
     @Autowired
-    private PlayerService playerService;
+    private PlayerMapper playerMapper;
 
+    @Autowired
+    private PlayerService playerService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -109,9 +113,10 @@ public class PlayerResourceIntTest {
         int databaseSizeBeforeCreate = playerRepository.findAll().size();
 
         // Create the Player
+        PlayerDTO playerDTO = playerMapper.toDto(player);
         restPlayerMockMvc.perform(post("/api/players")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(player)))
+            .content(TestUtil.convertObjectToJsonBytes(playerDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Player in the database
@@ -131,11 +136,12 @@ public class PlayerResourceIntTest {
 
         // Create the Player with an existing ID
         player.setId(1L);
+        PlayerDTO playerDTO = playerMapper.toDto(player);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restPlayerMockMvc.perform(post("/api/players")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(player)))
+            .content(TestUtil.convertObjectToJsonBytes(playerDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Player in the database
@@ -189,8 +195,7 @@ public class PlayerResourceIntTest {
     @Transactional
     public void updatePlayer() throws Exception {
         // Initialize the database
-        playerService.save(player);
-
+        playerRepository.saveAndFlush(player);
         int databaseSizeBeforeUpdate = playerRepository.findAll().size();
 
         // Update the player
@@ -200,10 +205,11 @@ public class PlayerResourceIntTest {
             .lastName(UPDATED_LAST_NAME)
             .frenoyId(UPDATED_FRENOY_ID)
             .ranking(UPDATED_RANKING);
+        PlayerDTO playerDTO = playerMapper.toDto(updatedPlayer);
 
         restPlayerMockMvc.perform(put("/api/players")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(updatedPlayer)))
+            .content(TestUtil.convertObjectToJsonBytes(playerDTO)))
             .andExpect(status().isOk());
 
         // Validate the Player in the database
@@ -222,11 +228,12 @@ public class PlayerResourceIntTest {
         int databaseSizeBeforeUpdate = playerRepository.findAll().size();
 
         // Create the Player
+        PlayerDTO playerDTO = playerMapper.toDto(player);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
         restPlayerMockMvc.perform(put("/api/players")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(player)))
+            .content(TestUtil.convertObjectToJsonBytes(playerDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Player in the database
@@ -238,8 +245,7 @@ public class PlayerResourceIntTest {
     @Transactional
     public void deletePlayer() throws Exception {
         // Initialize the database
-        playerService.save(player);
-
+        playerRepository.saveAndFlush(player);
         int databaseSizeBeforeDelete = playerRepository.findAll().size();
 
         // Get the player
@@ -265,5 +271,28 @@ public class PlayerResourceIntTest {
         assertThat(player1).isNotEqualTo(player2);
         player1.setId(null);
         assertThat(player1).isNotEqualTo(player2);
+    }
+
+    @Test
+    @Transactional
+    public void dtoEqualsVerifier() throws Exception {
+        TestUtil.equalsVerifier(PlayerDTO.class);
+        PlayerDTO playerDTO1 = new PlayerDTO();
+        playerDTO1.setId(1L);
+        PlayerDTO playerDTO2 = new PlayerDTO();
+        assertThat(playerDTO1).isNotEqualTo(playerDTO2);
+        playerDTO2.setId(playerDTO1.getId());
+        assertThat(playerDTO1).isEqualTo(playerDTO2);
+        playerDTO2.setId(2L);
+        assertThat(playerDTO1).isNotEqualTo(playerDTO2);
+        playerDTO1.setId(null);
+        assertThat(playerDTO1).isNotEqualTo(playerDTO2);
+    }
+
+    @Test
+    @Transactional
+    public void testEntityFromId() {
+        assertThat(playerMapper.fromId(42L).getId()).isEqualTo(42);
+        assertThat(playerMapper.fromId(null)).isNull();
     }
 }
