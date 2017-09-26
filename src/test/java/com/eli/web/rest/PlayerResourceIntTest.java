@@ -4,7 +4,6 @@ import com.eli.TableTennisManagerApp;
 
 import com.eli.domain.Player;
 import com.eli.repository.PlayerRepository;
-import com.eli.service.FrenoyService;
 import com.eli.service.PlayerService;
 import com.eli.web.rest.errors.ExceptionTranslator;
 
@@ -59,9 +58,6 @@ public class PlayerResourceIntTest {
 
 
     @Autowired
-    private FrenoyService frenoyService;
-
-    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -80,7 +76,7 @@ public class PlayerResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PlayerResource playerResource = new PlayerResource(playerService, frenoyService);
+        final PlayerResource playerResource = new PlayerResource(playerService);
         this.restPlayerMockMvc = MockMvcBuilders.standaloneSetup(playerResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

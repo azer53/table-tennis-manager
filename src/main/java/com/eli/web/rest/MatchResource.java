@@ -2,6 +2,7 @@ package com.eli.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.eli.domain.Match;
+import com.eli.domain.Player;
 import com.eli.service.MatchService;
 import com.eli.web.rest.util.HeaderUtil;
 import com.eli.web.rest.util.PaginationUtil;
@@ -92,8 +93,19 @@ public class MatchResource {
     public ResponseEntity<List<Match>> getAllMatches(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Matches");
         Page<Match> page = matchService.findAll(pageable);
+        if (page.getNumberOfElements() < 5) {
+            syncMatches();
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/matches");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    private void syncMatches() {
+        log.debug("REST request to sync and save frenoy players");
+        List<Match> matches = matchService.getMatches(1);
+        for (Match match : matches) {
+            matchService.save(match);
+        }
     }
 
     /**

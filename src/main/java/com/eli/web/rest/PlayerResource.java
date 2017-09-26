@@ -2,7 +2,6 @@ package com.eli.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.eli.domain.Player;
-import com.eli.service.FrenoyService;
 import com.eli.service.PlayerService;
 import com.eli.web.rest.util.HeaderUtil;
 import com.eli.web.rest.util.PaginationUtil;
@@ -36,11 +35,9 @@ public class PlayerResource {
 
     private final PlayerService playerService;
 
-    private final FrenoyService frenoyService;
 
-    public PlayerResource(PlayerService playerService, FrenoyService frenoyService) {
+    public PlayerResource(PlayerService playerService) {
         this.playerService = playerService;
-        this.frenoyService = frenoyService;
     }
 
     /**
@@ -107,7 +104,7 @@ public class PlayerResource {
 
     private void syncPlayers() {
         log.debug("REST request to sync and save frenoy players");
-        List<Player> sintNiklaasPlayers = frenoyService.getSintNiklaasPlayers();
+        List<Player> sintNiklaasPlayers = playerService.getSintNiklaasPlayers();
         for (Player player : sintNiklaasPlayers) {
             playerService.save(player);
         }
